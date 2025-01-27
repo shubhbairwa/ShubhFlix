@@ -1,6 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    // Kotlin serialization plugin for type safe routes and navigation arguments
+    kotlin("plugin.serialization") version "2.0.21"
+
+        id("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
@@ -41,6 +46,7 @@ android {
 
 dependencies {
 
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -60,8 +66,25 @@ dependencies {
 
     // Saved state module for ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+    //coroutines
     implementation(libs.kotlinx.coroutines.android)
 
-    /*   // Annotation processor
-       kap("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")*/
+    //Retrofit
+    implementation(libs.retrofit)
+    //Gson
+    implementation(libs.gson)
+    //OkHttp
+    implementation(libs.okhttp)
+
+    //GLide
+    implementation(libs.glide)
+
+    // Views/Fragments integration
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+
+    // Feature module support for Fragments
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+
+
 }

@@ -5,6 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.shubh.shubhflix.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineName
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
+Glide.with(this).load(R.mipmap.ic_launcher).into(binding.imageView)
 
 
     }
