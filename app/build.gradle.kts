@@ -1,10 +1,18 @@
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     // Kotlin serialization plugin for type safe routes and navigation arguments
     kotlin("plugin.serialization") version "2.0.21"
+// for safe-args in navigation component
+    id("androidx.navigation.safeargs.kotlin")
 
-        id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -86,5 +94,11 @@ dependencies {
     // Feature module support for Fragments
     implementation(libs.androidx.navigation.dynamic.features.fragment)
 
+    //daager hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
 
 }
+
+

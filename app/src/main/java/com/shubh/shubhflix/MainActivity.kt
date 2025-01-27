@@ -7,20 +7,21 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.shubh.shubhflix.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.shubh.shubhflix.hilttest.HiltTest
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var hiltTest: HiltTest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
-        binding=ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -28,8 +29,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-Glide.with(this).load(R.mipmap.ic_launcher).into(binding.imageView)
+        Glide.with(this).load(R.mipmap.ic_launcher).into(binding.imageView)
 
+       // print(hiltTest.doWithName())
 
+        binding.apply {
+            tvheading.text = hiltTest.doWithName()
+        }
     }
 }
