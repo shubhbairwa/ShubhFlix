@@ -2,8 +2,33 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ShubhFlix" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/background_app</item>
+        <item name="android:colorAccent">@color/primary</item>
+        <item name="android:statusBarColor">@color/app_bar</item>
     </style>
 
     <style name="Theme.ShubhFlix" parent="Base.Theme.ShubhFlix" />
+
+
+    <style name="title_text" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/primary_text_white</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="body_text" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/secondary_text_white</item>
+        <item name="android:fontFamily">@font/roboto</item>
+
+    </style>
+
+    <style name="hint_text" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/hint_text_white</item>
+        <item name="android:fontFamily">@font/roboto</item>
+
+    </style>
 </resources>

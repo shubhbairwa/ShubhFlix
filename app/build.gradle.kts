@@ -81,8 +81,13 @@ dependencies {
     implementation(libs.retrofit)
     //Gson
     implementation(libs.gson)
+    //Gson Convertor
+    implementation (libs.converter.gson)
     //OkHttp
     implementation(libs.okhttp)
+
+    //logging interceptor
+    implementation (libs.okhttp3.logging.interceptor)
 
     //GLide
     implementation(libs.glide)
@@ -97,6 +102,12 @@ dependencies {
     //daager hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+
+    implementation(libs.androidx.media3.exoplayer.v151)
+    implementation(libs.androidx.media3.exoplayer.dash.v151)
+    implementation(libs.androidx.media3.ui.v151)
+
 
 
 }
