@@ -18,7 +18,7 @@
         <activity
             android:name=".ui.activity.activity.VideoPlayerScreenActivity"
             android:exported="false"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape"/>
         <activity
             android:name=".ui.activity.MainActivity"

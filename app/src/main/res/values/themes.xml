@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/background_app</item>
         <item name="android:colorAccent">@color/primary</item>
         <item name="android:statusBarColor">@color/app_bar</item>
+
     </style>
 
     <style name="Theme.ShubhFlix" parent="Base.Theme.ShubhFlix" />

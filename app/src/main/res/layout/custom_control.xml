@@ -1,0 +1,100 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+android:background="@drawable/translucent_background"
+
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <ImageButton
+        android:id="@+id/ibCrossButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvVideoTitle"
+        style="@style/title_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="body title"
+        app:layout_constraintBottom_toBottomOf="@id/ibCrossButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ibCrossButton"
+        app:layout_constraintTop_toTopOf="@id/ibCrossButton" />
+
+    <ImageButton
+        android:id="@+id/ibReplay"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_replay_5"
+        app:layout_constraintBottom_toBottomOf="@+id/ibPlayPause"
+        app:layout_constraintEnd_toStartOf="@+id/ibPlayPause"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ibPlayPause" />
+
+    <ImageButton
+        android:id="@+id/ibPlayPause"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_play"
+        app:layout_constraintBottom_toBottomOf="@+id/ibForward"
+        app:layout_constraintEnd_toStartOf="@+id/ibForward"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibReplay"
+        app:layout_constraintTop_toTopOf="@+id/ibForward" />
+
+    <ImageButton
+        android:id="@+id/ibForward"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="32dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_forward_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ibPlayPause"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+
+    <SeekBar
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toStartOf="@id/tvVideoDurationLeft"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarVideo"
+        android:thumbTint="@color/primary"
+        android:progressTint="@color/primary"
+      android:layout_marginBottom="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+    <TextView
+        android:id="@+id/tvVideoDurationLeft"
+        style="@style/body_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="body title"
+        app:layout_constraintTop_toTopOf="@id/seekBarVideo"
+        app:layout_constraintBottom_toBottomOf="@id/seekBarVideo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/seekBarVideo"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

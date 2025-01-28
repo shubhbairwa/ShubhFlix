@@ -48,15 +48,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvVideoList.adapter = adapter
 
-        adapter.setOnItemClickListener {
+        adapter.setOnItemClickListener {data->
             val intent = Intent(this, VideoPlayerScreenActivity::class.java).also {
+                it.putExtra("url",data.videos.medium.url)
+                it.putExtra("duration",data.duration.toString())
+                it.putExtra("title",data.user)
                 startActivity(it)
             }
         }
         observeList()
 
 
-        viewModel.fetchVideos("cat")
+        viewModel.fetchVideos("anime")
 
 
     }
