@@ -28,6 +28,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Load the API key from local.properties
+        buildConfigField("String", "API_KEY", "${project.properties["API_KEY"]}")
     }
 
     buildTypes {
@@ -49,7 +51,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+        buildConfig = true
+
     }
+
 }
 
 dependencies {

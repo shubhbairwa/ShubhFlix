@@ -26,15 +26,7 @@ object NetworkModule {
 
             .client(
                 OkHttpClient.Builder()
-                    /*.addInterceptor { chain ->
-                        val request = chain.request().newBuilder()
-                            .addHeader(
-                                "Authorization",
-                                "Bearer BfFPYi4WneGA1C8akhXHB1ScchqwVJVowSOC83wfxOOxQgeLxXyF1WHx"
-                            )
-                            .build()
-                        chain.proceed(request)
-                    }*/
+
                     .addInterceptor(HttpLoggingInterceptor().apply {
                         level = HttpLoggingInterceptor.Level.BODY
                     })
