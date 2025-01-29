@@ -213,6 +213,7 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
             player.playWhenReady = true
 
             customTimer.start()
+
         }
     }
 

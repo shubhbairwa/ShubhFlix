@@ -2,6 +2,9 @@ package com.shubh.shubhflix.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +25,9 @@ import com.shubh.shubhflix.ui.activity.activity.VideoPlayerScreenActivity
 import com.shubh.shubhflix.ui.activity.recycleradapter.VideoAdapter
 import com.shubh.shubhflix.ui.activity.viewmodel.VideoViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,6 +40,11 @@ class MainActivity : AppCompatActivity() {
     private val adapter = VideoAdapter()
 
     private val viewModel: VideoViewModel by viewModels()
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,20 +59,44 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvVideoList.adapter = adapter
 
-        adapter.setOnItemClickListener {data->
+        adapter.setOnItemClickListener { data ->
             val intent = Intent(this, VideoPlayerScreenActivity::class.java).also {
-                it.putExtra("url",data.videos.medium.url)
-                it.putExtra("duration",data.duration.toString())
-                it.putExtra("title",data.user)
+                it.putExtra("url", data.videos.medium.url)
+                it.putExtra("duration", data.duration.toString())
+                it.putExtra("title", data.user)
                 startActivity(it)
             }
         }
         observeList()
 
 
+
         viewModel.fetchVideos("anime")
 
 
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(3000)
+                    Log.e(TAG, "onTextChanged: ${s.toString()}")
+                    searchedVideo(s.toString())
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
+    }
+
+    private fun searchedVideo(searchQuery: String) {
+        viewModel.fetchVideos(searchQuery)
     }
 
     private fun observeList() {
@@ -78,6 +113,7 @@ class MainActivity : AppCompatActivity() {
                         is ApiState.Success -> {
                             binding.progressBar.visibility = View.GONE
                             binding.rvVideoList.visibility = View.VISIBLE
+                            adapter.submitList(mutableListOf())
                             adapter.submitList(state.data)
                         }
 
