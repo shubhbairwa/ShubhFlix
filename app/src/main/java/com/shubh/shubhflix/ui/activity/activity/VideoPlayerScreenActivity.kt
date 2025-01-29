@@ -20,28 +20,32 @@ import androidx.media3.common.Player
 import androidx.media3.common.Player.Listener
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.DefaultTimeBar
+import androidx.media3.ui.TimeBar
 import com.shubh.shubhflix.R
 import com.shubh.shubhflix.databinding.ActivityVideoPlayerScreenBinding
 import com.shubh.shubhflix.helper.CustomCountdownTimer
 import com.shubh.shubhflix.helper.GlobalFunctions
 
+@UnstableApi
 class VideoPlayerScreenActivity : AppCompatActivity() {
     lateinit var binding: ActivityVideoPlayerScreenBinding
     lateinit var player: ExoPlayer
-    var videoUrl = ""
-    var videoDuartion = 0
-    var videoTitle = ""
+    private var videoUrl = ""
+    private var videoDuartion = 0
+    private var videoTitle = ""
 
 
-    lateinit var ibCrossButton: ImageButton
+    private lateinit var ibCrossButton: ImageButton
     lateinit var ibPlayPauseButton: ImageButton
-    lateinit var ibForwardButton: ImageButton
-    lateinit var ibReplayButton: ImageButton
-    lateinit var tvTitle: TextView
-    lateinit var tvDuration: TextView
-    lateinit var seekBar: SeekBar
+    private lateinit var ibForwardButton: ImageButton
+    private lateinit var ibReplayButton: ImageButton
+    private lateinit var tvTitle: TextView
+    private lateinit var tvDuration: TextView
 
-    private lateinit var customTimer: CustomCountdownTimer
+
+    private lateinit var exoTimeBar: DefaultTimeBar
+
 
     companion object {
         private const val TAG = "VideoPlayerScreenActivi"
@@ -56,10 +60,12 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
         binding.videoProgress.visibility = View.VISIBLE
 
 
-
+        //todo get VideoDetails
         videoUrl = intent.getStringExtra("url").toString()
         videoDuartion = intent.getStringExtra("duration").toString().toInt()
         videoTitle = intent.getStringExtra("title").toString()
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -87,13 +93,9 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
             ibPlayPauseButton = playerView.findViewById<ImageButton>(R.id.ibPlayPause)
             ibForwardButton = playerView.findViewById<ImageButton>(R.id.ibForward)
             ibReplayButton = playerView.findViewById<ImageButton>(R.id.ibReplay)
-            seekBar = playerView.findViewById<SeekBar>(R.id.seekBarVideo)
+            exoTimeBar = playerView.findViewById<DefaultTimeBar>(R.id.seekBarVideo)
             tvTitle = playerView.findViewById<TextView>(R.id.tvVideoTitle)
             tvDuration = playerView.findViewById<TextView>(R.id.tvVideoDurationLeft)
-
-            // Set up SeekBar
-            seekBar = playerView.findViewById<SeekBar>(R.id.seekBarVideo)
-            seekBar.max = 100 // Example: Set max progress to 100 (adjust as needed)
 
             tvTitle.text = videoTitle
             tvDuration.text = GlobalFunctions.formatSecondsToTime(videoDuartion)
@@ -118,60 +120,56 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
             // Initialize ExoPlayer
             player = ExoPlayer.Builder(this@VideoPlayerScreenActivity).build()
             playerView.player = player
-
-            ibPlayPauseButton.setOnClickListener {
-                if (player.isPlaying) {
-                    player.pause()
-                    ibPlayPauseButton.setImageResource(R.drawable.ic_play) // Change to play icon
-                    customTimer.pause()
-                } else {
-                    player.play()
-                    ibPlayPauseButton.setImageResource(R.drawable.ic_pause) // Change to pause icon
-                    customTimer.start()
-                }
-            }
-
-
-            // Set media item
+            // Set media item or the video you want to play
             val mediaItem = MediaItem.fromUri(videoUrl)
             player.setMediaItem(mediaItem)
 
             // Prepare and play
             player.prepare()
+            //default when video is ready
             ibPlayPauseButton.setImageResource(R.drawable.ic_pause) // Change to pause icon
-            //todo adding counter in reverse
-            customTimer = CustomCountdownTimer(
-                totalSeconds = videoDuartion.toLong(),
-                onTick = { time ->
-                    tvDuration.text = time
-                },
-                onFinish = {
-                    tvDuration.text = "00:00:00"
-                    player.pause() // Stop the video when the timer finishes
+
+
+            ibPlayPauseButton.setOnClickListener {
+                if (player.isPlaying) {
+                    player.pause()
+                    ibPlayPauseButton.setImageResource(R.drawable.ic_play) // Change to play icon
+
+                } else {
+                    player.play()
+                    ibPlayPauseButton.setImageResource(R.drawable.ic_pause) // Change to pause icon
+
                 }
-            )
+            }
+
+
+
+            exoTimeBar.addListener(object : TimeBar.OnScrubListener {
+                override fun onScrubStart(timeBar: TimeBar, position: Long) {
+
+                }
+
+                override fun onScrubMove(timeBar: TimeBar, position: Long) {
+                    player.seekTo(position)
+                }
+
+                override fun onScrubStop(timeBar: TimeBar, position: Long, canceled: Boolean) {
+
+                }
+
+            })
+
+
+
+            ibForwardButton.setOnClickListener { seekPlayerBy(5000) }
+            ibReplayButton.setOnClickListener { seekPlayerBy(-5000) }
+
+
 
             player.addListener(object : Player.Listener {
 
-                override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-                    if (playWhenReady) {
-                        // Video is playing, resume the timer
-                        customTimer.resume()
-                    } else {
-                        // Video is paused, pause the timer
-                        customTimer.pause()
-                    }
-                }
 
 
-                override fun onPositionDiscontinuity(reason: Int) {
-                    // Update seekBar position
-                    val position = player.currentPosition
-                    val duration = player.duration
-                    seekBar.progress = ((position.toFloat() / duration) * 100).toInt()
-                    Log.e(TAG, "onPositionDiscontinuity duration=>: $duration")
-                    Log.e(TAG, "onPositionDiscontinuity position=>: $position")
-                }
 
                 override fun onPlaybackStateChanged(state: Int) {
                     when (state) {
@@ -187,9 +185,9 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
 
                         ExoPlayer.STATE_READY -> {
                             binding.videoProgress.visibility = View.INVISIBLE
-                            // Player is ready, we can start updating the seekbar
-                            //updateSeekBar()
-                            //player.get
+
+                            updateSeekBar()
+                            Log.e(TAG, "onPlaybackStateChanged: Playback state ready")
                         }
 
                         ExoPlayer.STATE_ENDED -> {
@@ -200,7 +198,7 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
                             player.seekTo(0) // Reset to the beginning
                             player.playWhenReady = false // Pause the playback (optional)
                             ibPlayPauseButton.setImageResource(R.drawable.ic_play)
-                            customTimer.reset()
+
 
 
                         }
@@ -211,8 +209,7 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
 
 
             player.playWhenReady = true
-
-            customTimer.start()
+            // Sync seek bar with video progress
 
         }
     }
@@ -225,7 +222,44 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         player.pause()
-        customTimer.pause()
+
+    }
+
+    // Function to update the time bar progress
+    private fun updateSeekBar() {
+        val duration = player.duration
+        val position = player.currentPosition
+
+        if (duration > 0) {
+            exoTimeBar.setDuration(duration)
+            exoTimeBar.setPosition(position)
+        }
+
+        binding.playerView.postDelayed({ updateSeekBar() }, 1000)
+    }
+
+
+    // Function to seek player with proper boundary conditions
+    private fun seekPlayerBy(milliseconds: Long) {
+        val newPosition = player.currentPosition + milliseconds
+
+        // Corner Case 1: Ensure position does not go below 0
+        if (newPosition < 0) {
+            player.seekTo(0)
+            Log.d("Seek", "Cannot rewind beyond 0 seconds")
+            return
+        }
+
+        // Corner Case 2: Ensure position does not exceed video duration
+        if (newPosition > player.duration) {
+            player.seekTo(player.duration)
+            Log.d("Seek", "Cannot seek beyond video duration")
+            return
+        }
+
+        // Seek to the valid new position
+        player.seekTo(newPosition)
+        exoTimeBar.setPosition(newPosition) // Sync with time bar
     }
 
 

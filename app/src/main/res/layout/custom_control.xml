@@ -70,13 +70,16 @@ android:background="@drawable/translucent_background"
         app:layout_constraintVertical_bias="0.5" />
 
 
-    <SeekBar
+    <androidx.media3.ui.DefaultTimeBar
         android:layout_width="0dp"
         app:layout_constraintEnd_toStartOf="@id/tvVideoDurationLeft"
         android:layout_height="wrap_content"
         android:id="@+id/seekBarVideo"
-        android:thumbTint="@color/primary"
-        android:progressTint="@color/primary"
+        app:played_ad_marker_color="@color/primary"
+       app:ad_marker_color="@color/primary"
+        app:played_color="@color/primary"
+
+        app:buffered_color="@color/secondary_text_white"
       android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

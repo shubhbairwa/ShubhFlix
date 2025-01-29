@@ -80,11 +80,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(3000)
-                    Log.e(TAG, "onTextChanged: ${s.toString()}")
-                    searchedVideo(s.toString())
+                if (s.toString().isNotEmpty()){
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(1000)
+                        Log.e(TAG, "onTextChanged: ${s.toString()}")
+                        searchedVideo(s.toString())
+                    }
+                }else{
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(1000)
+                        Log.e(TAG, "onTextChanged: ${s.toString()}")
+                        //searchedVideo(s.toString())
+                        viewModel.fetchVideos("anime")
+                    }
                 }
+
             }
 
             override fun afterTextChanged(s: Editable?) {
