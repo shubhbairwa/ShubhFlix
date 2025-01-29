@@ -6,7 +6,7 @@ ShubhFlix is an Android video streaming app built using **ExoPlayer, MVVM, Retro
 ---
 
 ## 📸 Screenshots
-![video_player](app/src/main/res/assets/splash_git.png) ![video_list](app/src/main/res/assets/list_preview.png) ![Splash Screen](app/src/main/res/assets/2_removebg_preview.png)
+![video_player](app/src/main/res/gitscreens/splash_next.png) ![video_list](app/src/main/res/gitscreens/splash.png) ![Splash Screen](app/src/main/res/gitscreens/list.png)
 
 
 

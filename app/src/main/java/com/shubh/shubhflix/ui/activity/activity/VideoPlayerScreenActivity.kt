@@ -223,6 +223,7 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
 
     }
 
+
     // Function to update the time bar progress
     private fun updateSeekBar() {
         val duration = player.duration

@@ -2,6 +2,7 @@ package com.shubh.shubhflix.helper
 
 object GlobalFunctions {
 
+
     fun formatSecondsToTime(seconds: Int): String {
         val hours = seconds / 3600
         val minutes = (seconds % 3600) / 60

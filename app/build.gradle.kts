@@ -29,7 +29,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // Load the API key from local.properties
-        buildConfigField("String", "API_KEY", "${project.properties["API_KEY"]}")
+
+       // buildConfigField("String", "API_KEY", "${project.properties["API_KEY"]}")
+//        buildConfigField ("String", "API_KEY",
+//            (project.findProperty("API_KEY") ?: "default_api_key").toString()
+//        )
     }
 
     buildTypes {
@@ -39,6 +43,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+
+        }
+
+        debug {
+
         }
     }
     compileOptions {
@@ -109,7 +119,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-
+//exoplayer
     implementation(libs.androidx.media3.exoplayer.v151)
     implementation(libs.androidx.media3.exoplayer.dash.v151)
     implementation(libs.androidx.media3.ui.v151)
