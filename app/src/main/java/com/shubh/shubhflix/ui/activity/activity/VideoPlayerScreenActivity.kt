@@ -169,9 +169,8 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
             player.addListener(object : Player.Listener {
 
 
-
-
                 override fun onPlaybackStateChanged(state: Int) {
+                    updateRemainingTime() // Update on playback state change
                     when (state) {
                         ExoPlayer.STATE_IDLE -> {
                             // Do nothing or reset UI elements
@@ -198,7 +197,6 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
                             player.seekTo(0) // Reset to the beginning
                             player.playWhenReady = false // Pause the playback (optional)
                             ibPlayPauseButton.setImageResource(R.drawable.ic_play)
-
 
 
                         }
@@ -235,7 +233,12 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
             exoTimeBar.setPosition(position)
         }
 
-        binding.playerView.postDelayed({ updateSeekBar() }, 1000)
+        binding.playerView.postDelayed({
+            updateSeekBar()
+            //update duration left
+            updateRemainingTime()
+
+        }, 1000)
     }
 
 
@@ -262,5 +265,13 @@ class VideoPlayerScreenActivity : AppCompatActivity() {
         exoTimeBar.setPosition(newPosition) // Sync with time bar
     }
 
+    // Function to update remaining video duration
+    fun updateRemainingTime() {
+        val duration = player.duration
+        val currentPosition = player.currentPosition
+        val remainingTime = duration - currentPosition
+
+        tvDuration.text = GlobalFunctions.formatTime(remainingTime) // Set text
+    }
 
 }
