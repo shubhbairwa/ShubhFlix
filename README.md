@@ -53,5 +53,5 @@ ShubhFlix is an Android video streaming app built using **ExoPlayer, MVVM, Retro
 
 For any queries, feel free to reach out!
 
-🔗 [GitHub](https://github.com/shubhbairwa/ShubhFlix) | 📧 [Gmail](mailto\:shubhamver61002@gmail.com)
+🔗 [GitHub](https://github.com/shubhbairwa/ShubhFlix) | 📧 [Gmail-shubhamver61002@gmail.com](mailto\:shubhamver61002@gmail.com)
 
