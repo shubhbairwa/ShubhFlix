@@ -15,6 +15,7 @@ plugins {
     id("com.google.dagger.hilt.android")
 
 }
+val API_KEY by extra("48486794-5056413700d16e0de5163b6e8")
 
 android {
     namespace = "com.shubh.shubhflix"
@@ -29,8 +30,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         // Load the API key from local.properties
+              buildConfigField("String","API_KEY","21u49842948921142912214")
 
-       // buildConfigField("String", "API_KEY", "${project.properties["API_KEY"]}")
+//       buildConfigField("String", "API_KEY", "${project.properties["API_KEY"]}")
 //        buildConfigField ("String", "API_KEY",
 //            (project.findProperty("API_KEY") ?: "default_api_key").toString()
 //        )

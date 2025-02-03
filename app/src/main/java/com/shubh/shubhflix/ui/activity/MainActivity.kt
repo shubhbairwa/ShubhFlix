@@ -9,12 +9,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.OptIn
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.media3.common.util.UnstableApi
 import com.bumptech.glide.Glide
 import com.shubh.shubhflix.R
 import com.shubh.shubhflix.databinding.ActivityMainBinding
@@ -45,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
     }
 
+    @OptIn(UnstableApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
