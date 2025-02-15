@@ -10,28 +10,28 @@
 
     <ImageView
         android:id="@+id/ivapp"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="55dp"
         android:layout_margin="8dp"
         android:src="@drawable/app_logo"
+
         app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="6dp"
-        app:strokeColor="@color/secondary_text_white"
-        app:strokeWidth="1dp"
-        app:cardElevation="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivapp"
-        >
+        app:strokeColor="@color/secondary_text_white"
+        app:strokeWidth="1dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,15 +42,15 @@ app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/edtSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="  Search Here"
-                android:maxLines="1"
-                android:drawableStart="@drawable/ic_search"
-                android:textColorHint="@color/secondary_text_white"
-                android:textColor="@color/white"
-                android:maxLength="10"
-                android:padding="16dp"
-                android:fontFamily="@font/roboto"
                 android:background="@android:color/transparent"
+                android:drawableStart="@drawable/ic_search"
+                android:fontFamily="@font/roboto"
+                android:hint="  Search Here"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/secondary_text_white"
 
                 />
 

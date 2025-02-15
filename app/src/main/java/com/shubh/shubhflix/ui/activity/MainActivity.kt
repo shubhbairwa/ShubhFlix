@@ -1,11 +1,15 @@
 package com.shubh.shubhflix.ui.activity
 
+import android.animation.ObjectAnimator
 import android.content.Intent
+import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -73,8 +77,20 @@ class MainActivity : AppCompatActivity() {
         observeList()
 
 
+//todo fro moving view from one pos to another
+      /*  val windowMetrics = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            windowManager.currentWindowMetrics
+        } else {
+            TODO("VERSION.SDK_INT < R")
+        }
+        val bounds = windowMetrics.bounds
+        val screenWidth = bounds.width()
 
-        viewModel.fetchVideos("anime")
+        val animator = ObjectAnimator.ofFloat(binding.ivapp, "translationX", screenWidth.toFloat())
+        animator.duration = 500 // 500ms duration
+        animator.start()*/
+
+       viewModel.fetchVideos("anime")
 
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
