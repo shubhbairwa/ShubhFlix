@@ -56,8 +56,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         enableEdgeToEdge()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -74,8 +76,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+
         observeList()
 
+        if (viewModel.apiState.value !is ApiState.Success) {
+            viewModel.fetchVideos("Android")
+        }
 
 //todo fro moving view from one pos to another
       /*  val windowMetrics = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -90,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         animator.duration = 500 // 500ms duration
         animator.start()*/
 
-       viewModel.fetchVideos("anime")
+
 
 
         binding.edtSearch.addTextChangedListener(object : TextWatcher {
@@ -136,14 +142,12 @@ class MainActivity : AppCompatActivity() {
                         is ApiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.rvVideoList.visibility = View.GONE
-
                         }
 
                         is ApiState.Success -> {
                             binding.progressBar.visibility = View.GONE
                             binding.rvVideoList.visibility = View.VISIBLE
-                            adapter.submitList(mutableListOf())
-                            adapter.submitList(state.data)
+                            adapter.submitList(state.data) // ✅ No need to submit an empty list first
                         }
 
                         is ApiState.Error -> {
@@ -151,11 +155,11 @@ class MainActivity : AppCompatActivity() {
                             binding.rvVideoList.visibility = View.GONE
                             Toast.makeText(this@MainActivity, state.message, Toast.LENGTH_SHORT)
                                 .show()
-
                         }
                     }
                 }
             }
         }
     }
+
 }

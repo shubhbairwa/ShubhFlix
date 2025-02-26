@@ -13,6 +13,13 @@ import com.shubh.shubhflix.ui.activity.diffcallback.VideoDiffCallback
 
 class VideoAdapter : ListAdapter<Hit, VideoAdapter.VideoViewHolder>(VideoDiffCallback()) {
 
+    init {
+        setHasStableIds(true) // ✅ Keeps item positions stable
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItem(position).id.hashCode().toLong() // ✅ Unique stable ID
+    }
 
     private var onItemClickListener: ((Hit) -> Unit)? = null
     fun setOnItemClickListener(listener: (Hit) -> Unit) {

@@ -21,6 +21,8 @@ class VideoViewModel @Inject constructor(private val repository: VideoRepository
     fun fetchVideos(query:String) {
         viewModelScope.launch {
             _apiState.value = ApiState.Loading
+
+
             try {
                 val videos = repository.getVideos(query)
                 _apiState.value = ApiState.Success(videos)
